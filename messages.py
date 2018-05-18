@@ -1,6 +1,3 @@
-
-
-
 async def Responses(message, client):
     if message.content == "Avon":
         await client.send_message(message.channel, "Yes?")
