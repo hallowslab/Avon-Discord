@@ -102,3 +102,9 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# MyIgnores
+
+api_key.py
+APIurls.py
+*_test.py
