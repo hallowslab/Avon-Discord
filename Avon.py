@@ -1,6 +1,5 @@
 import discord
 import asyncio
-import commands_test
 from api_key import token
 from authenticated_commands import Commands
 from messages import Responses
