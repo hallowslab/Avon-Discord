@@ -1,10 +1,8 @@
 import discord
 import asyncio
 from api_key import token
-from authenticated_commands import Commands
-from messages import Responses
 from basic_commands import commands
-from Adv_messages import Adv_responses
+from Avon import Adv_messages, messages, authenticated_commands
 
 client = discord.Client()
 
@@ -16,10 +14,10 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
-    await Responses(message, client)
-    await Commands(message, client)
+    await messages.Responses(message, client)
+    await authenticated_commands.Commands(message, client)
     await commands(message, client)
-    await Adv_responses(message, client)
+    await Adv_messages.Adv_responses(message, client)
 
 
 client.run(token)
