@@ -1,15 +1,33 @@
-{ "Tuga":
-  [
-  { "Double Trouble":
-    [
+{
+  "Tuga": [
     {
-    "Erga Omnes": "https://www.youtube.com/watch?v=wsswX6C3XdM",
+  "Double Trouble": [
+    {
+      "Name": "Erga Omnes",
+      "url": "https://www.youtube.com/watch?v=wsswX6C3XdM"
     },
-    ]}
-  { "Dillaz":
-    [
-
-    ]}
-
+    {
+      "Name": "Cuidado",
+      "url": "https://www.youtube.com/watch?v=l4lq_rNQCg8"
+    },
+    {
+      "Name": "Depois do vinho",
+      "url": "https://www.youtube.com/watch?v=KQ875MskJls"
+    }
+  ],
+    "Dillaz": [
+      {
+        "Name": "1100 Cegonhas",
+        "url": "https://www.youtube.com/watch?v=M6rb7n_1kP4"
+      },
+      {
+        "Name": "O Clima",
+        "url": "https://www.youtube.com/watch?v=Ofi5G6jl6uQ"
+      },
+      {
+        "Name": "Pula ou levas Bleu",
+        "url": "https://www.youtube.com/watch?v=szSfNy-GZu0"
+      }
   ]
 }
+]}
