@@ -1,5 +1,16 @@
 from api_key import master_id
 from api_key import page_speed
+import json
+
+
+Music_channel = "446734255561900056"
+playListFolder = "Avon/Music/Playlist.json"
+
+def readPlaylist(location):
+    with open(location, "r") as f:
+        data = json.load(f)
+        return data
+
 
 async def Commands(message, client):
     if message.content.startswith("!"):
@@ -8,7 +19,7 @@ async def Commands(message, client):
             if command.upper().startswith("TESTSPEED"):
                 await client.send_message(message.channel, "Testing speed")
             elif command.upper().startswith("PLAY"):
-                args = command[]
+                args = command[5:]
             elif command.upper().startswith("CLOSE"):
                 await client.logout()
             else:
