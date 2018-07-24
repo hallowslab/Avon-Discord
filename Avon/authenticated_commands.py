@@ -7,7 +7,11 @@ async def Commands(message, client):
             command = message.content[1:]
             if command.upper().startswith("TESTSPEED"):
                 await client.send_message(message.channel, "Testing speed")
-            if command.upper().startswith("CLOSE"):
+            elif command.upper().startswith("PLAY"):
+                args = command[]
+            elif command.upper().startswith("CLOSE"):
                 await client.logout()
+            else:
+                await client.send_message(message.channel, "Command not recognized, or not implemented...")
         else:
             await client.send_message(message.channel , "You do not have permissions to execute that")
