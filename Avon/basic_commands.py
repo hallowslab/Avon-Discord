@@ -1,4 +1,4 @@
-from ping_host import ping
+from Avon.ping_host import ping
 
 
 async def commands(message, client):
