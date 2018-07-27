@@ -1,18 +1,14 @@
 from Avon.api_key import master_id
 from Avon.api_key import speed_api
+from Avon.Music.getFromPlaylist import readPlaylist
 import json
 import youtube_dl
 
-
 Music_channel = "446734255561900056"
-playListFolder = "Avon/Music/Playlist.json"
-
 players = {}
 
-def readPlaylist(location):
-    with open(location, "r") as f:
-        data = json.load(f)
-        return data
+######################## TODO: Must make bot be able to make calls and play songs by url ## REVIEW: Probably not possible
+
 
 
 async def Commands(message, client):
@@ -41,10 +37,11 @@ async def Commands(message, client):
                 if voice_channel == None:
                     await client.send_message(message.channel, "You don't seem to be connected to any voice channel")
                     return
-                await client.send_message(message.channel, "Playing song provided in url in {} voice channel".format(voice_channel))
+                # Join voice channel create a player add it to
                 vc = await client.join_voice_channel(voice_channel)
                 player = await vc.create_ytdl_player(url)
                 players[server.id] = player
+                await client.send_message(message.channel, "Playing song provided in url in {} voice channel".format(voice_channel))
                 player.start()
             if command.upper().startswith("PAUSE"):
                 id = message.server.id
@@ -62,5 +59,11 @@ async def Commands(message, client):
                 vc = client.voice_client_in(server)
                 print("disconnecting")
                 await vc.disconnect()
+            if command.upper().startswith("SHOWPLAYLIST"):
+                playlist = readPlaylist(playListFolder)
+                for item in playlist:
+                    await client.send_message(message.channel, "```Found: {}```".format(item))
+
+
         else:
             await client.send_message(message.channel , "You do not have permissions to execute that")
