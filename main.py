@@ -13,7 +13,9 @@ async def on_ready():
 @client.event
 async def on_message(message):
     await messages.Responses(message, client)
-    await authenticated_commands.Commands(message, client)
+    await authenticated_commands.bot_commands(message, client)
+    await authenticated_commands.music_commands(message, client)
+    await authenticated_commands.page_speed_commands(message, client)
     await basic_commands.commands(message, client)
     await Adv_messages.Adv_responses(message, client)
 
