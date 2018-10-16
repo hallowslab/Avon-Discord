@@ -1,5 +1,5 @@
 {
-  "Tuga": [
+  "TUGA":
     {
   "Double Trouble": [
     {
@@ -29,9 +29,9 @@
         "url": "https://www.youtube.com/watch?v=szSfNy-GZu0"
       }
   ]
-    }],
+    },
 
-  "English": [
+  "ENGLISH":
     {
       "Snow": [
         {
@@ -54,6 +54,5 @@
         }
       ]
     }
-  ]
 
 }

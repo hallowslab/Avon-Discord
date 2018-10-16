@@ -2,58 +2,68 @@ import json
 
 playListFolder = "Avon/Music/Playlist.json"
 
-def showAllArtists(location=playListFolder):
+def show_all_artists(location=playListFolder):
     with open(location, "r") as f:
         data = json.load(f)
-        genres = []
+        langs = [item for item in data]
         artists = []
-        for item in data:
-            genres.append(item)
-        for genre in genres:
-            for index, item in enumerate(data[genre][0]):
-                artists.append(genre + " - " + item)
+        for lang in langs:
+            for index, item in enumerate(data[lang]):
+                artists.append(item)
+        print(artists)
         return artists
 
-def showAllGenres(location=playListFolder):
+def show_all_langs(location=playListFolder):
     with open(location, "r") as f:
         data = json.load(f)
-        genres = []
-        for item in data:
-            genres.append(item)
-        return genres
+        langs = [item for item in data]
+        return langs
 
-def readPlaylist(location=playListFolder):
+def read_playlist(location=playListFolder):
     with open(location, "r") as f:
         data = json.load(f)
-        genres = []
-        namesAndUrls = {}
-        for item in data:
-            genres.append(item)
-        for genre in genres:
-            for index, item in enumerate(data[genre][0]):
-                currentArtist = item
-                songsPerArtist = data[genre][0][item]
-                for i in range(len(songsPerArtist)):
+        langs = [item for item in data]
+        names_and_urls = {}
+        for lang in langs:
+            for _, item in enumerate(data[lang]):
+                songs_per_artist = data[lang][item]
+                for i in range(len(songs_per_artist)):
                     songName = songsPerArtist[i]["Name"]
                     url = songsPerArtist[i]["url"]
                     namesAndUrls[songName] = url
-        print(namesAndUrls)
-        # for index, item in enumerate(Tuga_all):
-        #     currentArtist = Tuga_all[item]
-        #     for i in range(len(currentArtist)):
-        #         url = currentArtist[i]["url"]
-        #         songName = currentArtist[i]["Name"]
-        #         yield(songName, url)
+        return namesAndUrls
 
-def findByGenre(genre, location=playListFolder):
+def find_by_lang(lang, location=playListFolder):
     with open(location, "r") as f:
         data = json.load(f)
-        if genre.upper() == "TUGA" or genre.upper() == "PORTUGUES":
-            #Return Tuga music Playlist
-            pass
-        elif genre.upper() == "ENGLISH" or genre.upper() == "ENG":
-            #Return english music playlist
-            pass
+        names_and_urls = {}
+        langs = [item for item in data]
+        lang = lang.upper()
+        if lang.upper() in langs:
+            for _, item in enumerate(data[lang]):
+                songs_per_artist = data[lang][item]
+                for i in range(len(songs_per_artist)):
+                    song_name = songs_per_artist[i]["Name"]
+                    url = songs_per_artist[i]["url"]
+                    names_and_urls[song_name] = url
+            return names_and_urls
+        else:
+            return {"Error": "Couldn't find {} language".format(lang)}
 
-
-readPlaylist("Avon/Music/Playlist.json")
+def find_by_artist(artist, location=playListFolder):
+    with open(location, "r") as f:
+        data = json.load(f)
+        names_and_urls = {}
+        langs = [item for item in data]
+        for lang in langs:
+            artist_keys = [artist.upper() for artist in data[lang].keys()]
+            if artist.upper() in artist_keys:
+                songs_per_artist = data[lang][artist.title()]
+                for i in range(len(songs_per_artist)):
+                    song_name = songs_per_artist[i]["Name"]
+                    url = songs_per_artist[i]["url"]
+                    names_and_urls[song_name] = url
+        if len(names_and_urls) == 0:
+            return {"Error": "No artist named {} found".format(artist)}
+        else:
+            return names_and_urls
