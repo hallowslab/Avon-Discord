@@ -1,5 +1,5 @@
 from Avon.ping_host import ping
-from Avon.Music.getFromPlaylist import showAllGenres, showAllArtists
+from Avon.Music.getFromPlaylist import show_all_langs, show_all_artists
 
 
 async def commands(message, client):
@@ -17,9 +17,21 @@ async def commands(message, client):
                 await client.send_message(message.channel, "Host is online")
             else:
                 await client.send_message(message.channel, "Host seems to be down, or refusing ping requests")
-        if command.upper() == "SHOWGENRES":
-            genres = showAllGenres()
-            await client.send_message(message.channel, "```Genres are :{}```".format(genres))
+        if command.upper() == "SHOWLANGS":
+            all_langs = show_all_langs()
+            langs = ""
+            for lang in all_langs:
+                if lang != all_langs[-1]:
+                    langs += lang + ", "
+                else:
+                    langs += lang
+            await client.send_message(message.channel, "```Languages are :{}```".format(langs))
         if command.upper() == "SHOWARTISTS":
-            artists = showAllArtists()
+            all_artists = show_all_artists()
+            artists = ""
+            for artist in all_artists:
+                if artist != all_artists[-1]:
+                    artists += artist + ", "
+                else:
+                    artists += artist
             await client.send_message(message.channel, "```Artists are :{}```".format(artists))
