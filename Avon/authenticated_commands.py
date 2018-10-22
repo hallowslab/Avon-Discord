@@ -97,42 +97,13 @@ async def music_commands(message , client):
                         await client.send_message(message.channel, "Playing song provided in url in {} voice channel".format(voice_channel))
                         player.start()
 
+                        print("bananas")
+
                         start_time = time.time()
                         time.clock()
                         awaited = await wait_for_song(player, start_time)
                         if awaited == "Finished":
                             print("start new song")
-
-            if command.upper().startswith("TESTLAMBDA"):
-                artist = command[11:]
-                artist_songs = find_by_artist(artist)
-                current_index = 0
-                all_urls = []
-                for song in artist_songs:
-                    all_urls.append(artist_songs[song])
-                url = None
-                if url is None:
-                    #function is being called from after (this will be explained in the next function)
-                    if all_urls.size() > 0:
-                        #fetch from queue
-                        url = all_urls.dequeue()
-                    else:
-                        #Unset stored objects, also possibly disconnect from voice channel here
-                        player = None
-                        voice = None
-                        return
-                if player is None:
-                    #no one is using the stream player, we can start playback immediately
-                    player = await self.voice.create_ytdl_player(url, after=lambda: play_next(client, message))
-                    player.start()
-                else:
-                    if player.is_playing():
-                        #called by the user to add a song
-                        all_urls.enqueue(url)
-                    else:
-                        #this section happens when a song has finished, we play the next song here
-                        player = await self.voice.create_ytdl_player(url, after=lambda: play_next(client, message))
-                        player.start()
 
             if command.upper().startswith("PLAYURL"):
                 url = command[8:]
@@ -186,21 +157,17 @@ async def music_commands(message , client):
             await client.send_message(message.channel , "You do not have permissions to execute that")
 
 
-def play_next(client, message):
-    asyncio.run_coroutine_threadsafe(play_music(client, message), client.loop)
-
 
 
 async def wait_for_song(player, st_time):
     elapsed = 0
-    wait_timer = 0
+    wait_timer = 20
     running = True
-    if elapsed < player.duration + 3:
-        elapsed = time.time() - st_time
-        wait_timer = time.time() - st_time
-        if wait_timer >= 20:
-            wait_timer = 0
-    if elapsed >= player.duration + 3:
-        print("Song finished")
-        running = False
-        return("Finished")
+    while True:
+        if elapsed < player.duration:
+            elapsed = time.time() - st_time
+        if elapsed >= player.duration:
+            print("Song finished")
+            running = False
+            print("Finished")
+            return("Finished")

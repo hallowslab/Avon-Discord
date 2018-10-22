@@ -27,11 +27,12 @@ def read_playlist(location=playListFolder):
         for lang in langs:
             for _, item in enumerate(data[lang]):
                 songs_per_artist = data[lang][item]
+                print("HERE ==== ", songs_per_artist)
                 for i in range(len(songs_per_artist)):
-                    songName = songsPerArtist[i]["Name"]
-                    url = songsPerArtist[i]["url"]
-                    namesAndUrls[songName] = url
-        return namesAndUrls
+                    songName = songs_per_artist[i]["Name"]
+                    url = songs_per_artist[i]["url"]
+                    names_and_urls[songName] = url
+        return names_and_urls
 
 def find_by_lang(lang, location=playListFolder):
     with open(location, "r") as f:
