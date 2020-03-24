@@ -1,6 +1,7 @@
 import discord
 import asyncio
-from Avon import Adv_messages, messages, authenticated_commands, api_key, basic_commands
+from Avon.api_key import token
+from Avon import messages, authenticated_commands, api_key, basic_commands, profanity_filter
 
 client = discord.Client()
 
@@ -12,12 +13,12 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
-    await messages.Responses(message, client)
+    await messages.responses(message, client)
+    await profanity_filter.filter_messages(message, client)
     await authenticated_commands.bot_commands(message, client)
     await authenticated_commands.music_commands(message, client)
     await authenticated_commands.page_speed_commands(message, client)
     await basic_commands.commands(message, client)
-    await Adv_messages.Adv_responses(message, client)
 
 
-client.run(api_key.token)
+client.run(token)
