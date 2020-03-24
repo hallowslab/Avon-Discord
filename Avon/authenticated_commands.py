@@ -5,7 +5,7 @@ import youtube_dl
 import time
 import queue
 
-players = {}
+music_player = None
 
 async def admin_commands(message ,client):
     if message.author == client.user:
@@ -22,37 +22,29 @@ async def admin_commands(message ,client):
             if command.upper().startswith("TESTSPEED"):
                 await message.channel.send("Testing speed")
 
+            # Broken due to new updates
             if command.upper().startswith("PLAYURL"):
                 url = command[8:]
-                voice_channel = message.author.voice_channel
-                server = message.server
-
-                if voice_channel == None:
-                    await message.channel.send("You don't seem to be connected to any voice channel")
-                    return
-                else:
-                    # Join voice channel create a player add it to
-                    vc = await client.join_voice_channel(voice_channel)
-                    player = await vc.create_ytdl_player(url)
-                    players[server.id] = player
-                    await message.channel.send("Playing song provided in url in {} voice channel".format(voice_channel))
-                    player.start()
+                # Join voice channel create a player add it to
+                channel =  client.get_channel(692018702710865921)
+                vc = await channel.connect()
+                player = await vc.create_ytdl_player(url)
+                music_player = player
+                await message.channel.send("Playing song provided in url in {} voice channel".format(voice_channel))
+                player.start()
 
 
 
             if command.upper().startswith("PAUSE"):
-                id = message.server.id
-                players[id].pause()
+                music_player.pause()
                 await message.channel.send("Pausing music")
 
             if command.upper().startswith("STOPMUSIC"):
-                id = message.server.id
-                players[id].stop()
+                music_player.stop()
                 await message.channel.send("Stopping music")
 
             if command.upper().startswith("RESUME"):
-                id = message.server.id
-                players[id].resume()
+                music_player.resume()
                 await message.channel.send("Resuming music")
 
             if command.upper().startswith("DISCONNECT"):
