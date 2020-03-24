@@ -15,10 +15,8 @@ async def on_ready():
 async def on_message(message):
     await messages.responses(message, client)
     await profanity_filter.filter_messages(message, client)
-    await authenticated_commands.bot_commands(message, client)
-    await authenticated_commands.music_commands(message, client)
-    await authenticated_commands.page_speed_commands(message, client)
     await basic_commands.commands(message, client)
+    await authenticated_commands.admin_commands(message, client)
 
 
 client.run(token)

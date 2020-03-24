@@ -14,4 +14,4 @@ def check_page_speed(page):
     service.runpagespeed(url=page, utm_campaign=None, screenshot=None, locale=None, rule=None, snapshots=None, strategy=None, filter_third_party_resources=None, utm_source=None)
 
 
-check_page_speed("google.com")
+# check_page_speed("google.com")

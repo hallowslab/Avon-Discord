@@ -5,6 +5,8 @@ time_calls = ["WHAT TIME IS IT", "WHAT TIME IS IT?"]
 
 
 async def responses(message, client):
+    if message.author == client.user:
+        return
     ## Explicit messages
     if message.author == client.user:
         return
@@ -16,4 +18,4 @@ async def responses(message, client):
     for x in time_calls:
         if message.content.upper() == x:
             time = str(datetime.datetime.now().time())
-            await message.channel.send("It's: " + time[:8] + " At: UTC")
+            await message.channel.send("It's: " + time[:8] + " at: UTC")
