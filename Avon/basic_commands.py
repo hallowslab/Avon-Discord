@@ -9,14 +9,14 @@ async def commands(message, client):
             if command[5:].upper() == "ROCKSTAR":
                 host = "socialclub.rockstargames.com"
                 if ping(host) == True:
-                    await client.send_message(message.channel, "Rockstar social club is online")
+                    await message.channel.send("Rockstar social club is online")
                 else:
-                    await client.send_message(message.channel, "Rockstar social club seems to be down")
+                    await message.channel.send("Rockstar social club seems to be down")
             host = command[5:]
             if ping(host) == True:
-                await client.send_message(message.channel, "Host is online")
+                await message.channel.send("Host is online")
             else:
-                await client.send_message(message.channel, "Host seems to be down, or refusing ping requests")
+                await message.channel.send("Host seems to be down, or refusing ping requests")
         if command.upper() == "SHOWLANGS":
             all_langs = show_all_langs()
             langs = ""
@@ -25,7 +25,7 @@ async def commands(message, client):
                     langs += lang + ", "
                 else:
                     langs += lang
-            await client.send_message(message.channel, "```Languages are :{}```".format(langs))
+            await message.channel.send("```Languages are :{}```".format(langs))
         if command.upper() == "SHOWARTISTS":
             all_artists = show_all_artists()
             artists = ""
@@ -34,4 +34,4 @@ async def commands(message, client):
                     artists += artist + ", "
                 else:
                     artists += artist
-            await client.send_message(message.channel, "```Artists are :{}```".format(artists))
+            await message.channel.send("```Artists are :{}```".format(artists))

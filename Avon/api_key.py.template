@@ -1,3 +1,5 @@
 token = ""
 master_id = ""
 page_speed = ""
+neutrino_api_uid = ""
+neutrino_api_key = ""

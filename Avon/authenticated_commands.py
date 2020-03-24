@@ -19,7 +19,7 @@ async def bot_commands(message ,client):
             if command.upper().startswith("CLOSE"):
                 await client.logout()
         else:
-            await client.send_message(message.channel , "You do not have permissions to execute that")
+            await message.channel.send("You do not have permissions to execute that")
 
 
 
@@ -28,9 +28,9 @@ async def page_speed_commands(message, client):
         if message.author.id == master_id:
             command = message.content[1:]
             if command.upper().startswith("TESTSPEED"):
-                await client.send_message(message.channel, "Testing speed")
+                await message.channel.send("Testing speed")
         else:
-            await client.send_message(message.channel , "You do not have permissions to execute that")
+            await message.channel.send("You do not have permissions to execute that")
 
 
 
@@ -43,9 +43,9 @@ async def page_speed_commands(message, client):
 #     voice_channel = message.author.voice_channel
 #     server = message.server
 #     if voice_channel == None:
-#         await client.send_message(message.channel, "You don't seem to be connected to any voice channel")
+#         await message.channel.send("You don't seem to be connected to any voice channel")
 #         return
-#     await client.send_message(message.channel, "Playing song provided in url in {} voice channel".format(voice_channel))
+#     await message.channel.send("Playing song provided in url in {} voice channel".format(voice_channel))
 #     vc = await client.join_voice_channel(voice_channel)
 #     #player = await vc.create_ytdl_player(url)
 #     start = time.time()
@@ -75,13 +75,13 @@ async def music_commands(message , client):
                 print(artist_songs)
 
                 if voice_channel == None:
-                    await client.send_message(message.channel, "You don't seem to be connected to any voice channel")
+                    await message.channel.send("You don't seem to be connected to any voice channel")
                     return
                 else:
                     print(artist)
                     print(artist_songs)
                     if "Error" in artist_songs.keys():
-                        await client.send_message(message.channel, artist_songs)
+                        await message.channel.send(artist_songs)
                         return
                     else:
                         current_index = 0
@@ -94,7 +94,7 @@ async def music_commands(message , client):
                         vc = await client.join_voice_channel(voice_channel)
                         player = await vc.create_ytdl_player(current_url)
                         players[server.id] = player
-                        await client.send_message(message.channel, "Playing song provided in url in {} voice channel".format(voice_channel))
+                        await message.channel.send("Playing song provided in url in {} voice channel".format(voice_channel))
                         player.start()
 
                         print("bananas")
@@ -111,14 +111,14 @@ async def music_commands(message , client):
                 server = message.server
 
                 if voice_channel == None:
-                    await client.send_message(message.channel, "You don't seem to be connected to any voice channel")
+                    await message.channel.send("You don't seem to be connected to any voice channel")
                     return
                 else:
                     # Join voice channel create a player add it to
                     vc = await client.join_voice_channel(voice_channel)
                     player = await vc.create_ytdl_player(url)
                     players[server.id] = player
-                    await client.send_message(message.channel, "Playing song provided in url in {} voice channel".format(voice_channel))
+                    await message.channel.send("Playing song provided in url in {} voice channel".format(voice_channel))
                     player.start()
 
 
@@ -126,19 +126,19 @@ async def music_commands(message , client):
             if command.upper().startswith("PAUSE"):
                 id = message.server.id
                 players[id].pause()
-                await client.send_message(message.channel, "Pausing music")
+                await message.channel.send("Pausing music")
 
 
             if command.upper().startswith("STOPMUSIC"):
                 id = message.server.id
                 players[id].stop()
-                await client.send_message(message.channel, "Stopping music")
+                await message.channel.send("Stopping music")
 
 
             if command.upper().startswith("RESUME"):
                 id = message.server.id
                 players[id].resume()
-                await client.send_message(message.channel, "Resuming music")
+                await message.channel.send("Resuming music")
 
 
             if command.upper().startswith("DISCONNECT"):
@@ -152,9 +152,9 @@ async def music_commands(message , client):
                 playlist = read_playlist()
                 for item in playlist:
                     url = playlist[item]
-                    await client.send_message(message.channel, "```Found: {} at - {}```".format(item, url))
+                    await message.channel.send("```Found: {} at - {}```".format(item, url))
         else:
-            await client.send_message(message.channel , "You do not have permissions to execute that")
+            await message.channel.send("You do not have permissions to execute that")
 
 
 
