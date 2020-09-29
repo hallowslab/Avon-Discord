@@ -1,7 +1,6 @@
 import requests
 import json
 from urllib import request,parse
-from Avon.api_key import neutrino_api_uid, neutrino_api_key
 
 async def filter_messages(message, client):
   if message.author == client.user or message.content.startswith("!"):
