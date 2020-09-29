@@ -1,0 +1,5 @@
+{
+  "log_level": "info",
+  "log_files": false,
+  "discordpy_log_level": "off"
+}
