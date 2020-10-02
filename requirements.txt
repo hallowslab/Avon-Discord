@@ -1,5 +1,5 @@
 google-api-python-client
-discord.py
+discord.py[voice]
 youtube_dl
 PyNaCl
 oauth2client
