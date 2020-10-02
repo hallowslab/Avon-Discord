@@ -1,8 +1,8 @@
 {
-  "Discord": "",
-  "Master_ID": "",
-  "Music_channel_id": "",
-  "Page_Speed": "",
-  "Neutrino_API_key": "",
-  "Neutrion_API_uid": ""
+  "discord": "",
+  "master_id": "",
+  "music_channel_id": "",
+  "page_speed": "",
+  "neutrino_api_key": "",
+  "neutrino_api_uid": ""
 }

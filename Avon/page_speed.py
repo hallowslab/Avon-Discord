@@ -2,7 +2,7 @@ from __future__ import print_function
 from apiclient.discovery import build
 from Avon import config
 
-service = build('pagespeedonline', 'v4', developerKey = config.access_keys["Page_Speed"] )
+service = build('pagespeedonline', 'v4', developerKey = config.access_keys["page_speed"] )
 
 def check_page_speed(page):
     """
