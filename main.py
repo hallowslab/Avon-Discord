@@ -2,13 +2,15 @@ import sys
 import logging
 # This disables pylints warning about unused import since asyncio is being used
 #pylint: disable=unused-import
-import asyncio
+import time
 import discord
 from discord.ext import commands
-from Avon import messages, authenticated_commands, profanity_filter, config
+from Avon import messages, profanity_filter, config
+from Avon.extensions import music_commands
 
 bot = commands.Bot(command_prefix="!")
 logger = logging.getLogger("Avon-Discord")
+
 
 @bot.event
 async def on_ready():
@@ -24,12 +26,10 @@ async def on_message(message):
     Triggers when a message is sent to the server
     """
     await messages.responses(message, bot)
-    # Not being used since it has a small limit
+    # Not being used since it has a small API request limit
     # await profanity_filter.filter_messages(message, bot)
-    await authenticated_commands.admin_commands(message, bot)
-    await authenticated_commands.music_commands(message, bot)
-    await authenticated_commands.system_commands(message, bot)
     await bot.process_commands(message)
+
 
 def set_log_level(level):
     """
@@ -82,4 +82,8 @@ def set_up_logger():
 if __name__ == "__main__":
     config.load_keys_and_settings()
     set_up_logger()
+    start = time.perf_counter()
+    bot.load_extension("Avon.authenticated_commands")
+    end = time.perf_counter()
+    logger.debug("Adding commands took %0.2f", (end - start))
     bot.run(config.access_keys["discord"])

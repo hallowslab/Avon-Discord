@@ -1,72 +1,23 @@
 import logging
 import time
-#pylint: disable=unused-import
-import youtube_dl
-import discord
 from discord.ext import commands
 from Avon import config
-from Avon.ping_host import ping
+
+
+logger = logging.getLogger("Avon-Discord")
+
 
 MUSIC_PLAYER = None
 # Don't know if this helps at all but it is supposed to prevent
 # music_commands from overwritting a global variable while it is in use
 IS_PLAYER_BUSY = False
 
-logger = logging.getLogger("Avon-Discord")
-
-
 @commands.command()
-async def close(ctx):
+async def playurl(ctx, url: str):
     """
-    Closes the bot connection
+    Plays the specified URL in MUSIC_CHANNEL
     """
-    if str(ctx.message.author.id) == config.access_keys["master_id"]:
-        await ctx.send("Logging out!")
-        await ctx.bot.logout()
-    else:
-        await ctx.send("You do not have permissions to execute that!")
-
-@commands.command()
-async def kick(ctx, member: discord.Member, reason: str = None):
-    """
-    kicks the member and specifies reason
-    """
-    if str(ctx.message.author.id) == config.access_keys["master_id"]:
-        reason = "No reason defined" if reason is None else reason
-        await ctx.send("Kicking user %s, reason: %s" % (member, reason))
-        await member.kick(reason=reason)
-    else:
-        await ctx.send("You do not have permissions to execute that!")
-
-@commands.command()
-async def ban(ctx, member: discord.Member, reason: str = None):
-    """
-    kicks the member and specifies reason
-    """
-    if str(ctx.message.author.id) == config.access_keys["master_id"]:
-        reason = "No reason defined" if reason is None else reason
-        await ctx.send("Kicking user %s, reason: %s" % (member, reason))
-        await member.kick(reason=reason)
-    else:
-        await ctx.send("You do not have permissions to execute that!")
-
-
-async def admin_commands(message ,client):
-    """
-    Server administrator commands
-    """
-    if message.author == client.user:
-        return
-    if str(message.author.id) == config.access_keys["master_id"]:
-        if message.content.startswith("!"):
-            command = message.content[1:]
-            # TODO: Unfinished
-            if command.upper().startswith("TESTSPEED"):
-                # await message.channel.send("Testing speed")
-                await message.channel.send("Not implemented")
-    else:
-        logger.debug("Insufficient permissions")
-        await message.channel.send("You do not have permissions to execute that")
+    await ctx.send("Playing url %s in voice channel => %s" % (url))
 
 
 async def music_commands(message, client):
@@ -86,9 +37,10 @@ async def music_commands(message, client):
         if str(message.author.id) == config.access_keys["master_id"]:
             command = message.content[1:]
             logger.debug("Command => %s", command)
+            logger.debug("Locking global variable MUSIC_PLAYER")
+            IS_PLAYER_BUSY = True
             # Broken due to new updates
             if command.upper().startswith("PLAYURL"):
-                IS_PLAYER_BUSY = True
                 if MUSIC_PLAYER is not None:
                     logger.debug("MUSIC_PLAYER obj => %s", MUSIC_PLAYER)
                     await message.channel.send("Music player is already active")
@@ -150,27 +102,6 @@ async def music_commands(message, client):
     IS_PLAYER_BUSY = False
 
 
-async def system_commands(message, client):
-    """
-    Commands that call system functionality
-    """
-    if message.author == client.user:
-        return
-    if message.content.startswith("!"):
-        if str(message.author.id) == config.access_keys["master_id"]:
-            command = message.content[1:]
-            if command[:4].upper() == "PING":
-                host = command[5:]
-                if ping(host):
-                    await message.channel.send("Host is online")
-                else:
-                    await message.channel.send("Host seems to be down, \
-                                                or refusing ping requests")
-        else:
-            logger.debug("Insufficient permissions")
-            await message.channel.send("You do not have permissions to execute that")
-
-
 async def wait_for_song(player, st_time):
     """
     I dont remember why i wrote this
@@ -215,3 +146,12 @@ async def wait_for_song(player, st_time):
     #player = await vc.create_ytdl_player(url, after=lambda: ## FIXME: Function to run)
     #players[server.id] = player
     #player.start()
+
+def setup(bot):
+    """
+    Function to load commands as a bot extension
+    """
+    cmds = [
+    ]
+    for command in cmds:
+        bot.add_command(command)
