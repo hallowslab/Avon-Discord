@@ -1,3 +1,4 @@
 [MASTER]
 disable=
     c0114,
+ignore-patterns=**/____tests/*.py
