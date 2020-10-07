@@ -30,6 +30,18 @@ async def on_message(message):
     await bot.process_commands(message)
 
 
+@bot.event
+async def on_command_error(ctx, error):
+    """
+    Triggers on command error
+    """
+    error = error.__cause__ or error
+    if isinstance(error, commands.MissingPermissions):
+        await ctx.send("You don't have permissions to execute that")
+    else:
+        logger.debug(error)
+
+
 def set_log_level(level):
     """
     Check if the log level is valid and if not sets it to default
